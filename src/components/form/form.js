@@ -60,8 +60,8 @@ const Form = ({showActivePage, activePage}) => {
         axios.post(data.regURL, user)
           .then(function (response) {
             if (typeof response.data === "object" && response.data['user']) {
-              localStorage.setItem("user", response.data['user']);
-              localStorage.setItem("token", response.data['token']);
+              localStorage.setItem("admin", response.data['user']);
+              localStorage.setItem("admintoken", response.data['token']);
               if (localStorage.getItem(response.data['user'] + "defaultDevice")) {
                 showActivePage("home","Имя устройства");
               } else {
@@ -102,11 +102,11 @@ const Form = ({showActivePage, activePage}) => {
     } else {
       let user = {login, password};
       setErrorMes("Подождите...");
-      axios.post(data.regURL, user)
+      axios.post(data.authURL, user)
           .then(function (response) {
           if (typeof response.data === "object" && response.data['user']) {
-              localStorage.setItem("user", response.data['user']);
-              localStorage.setItem("token", response.data['token']);
+              localStorage.setItem("admin", response.data['user']);
+              localStorage.setItem("admintoken", response.data['token']);
               if (localStorage.getItem(response.data['user'] + "defaultDevice")) {
                 showActivePage("home","Имя устройства");
               } else {
@@ -118,8 +118,15 @@ const Form = ({showActivePage, activePage}) => {
                 setErrLogin("form__input_err");
                 setErrPass("form__input_err");
               } else {
-                setErrorMes("Что-то пошло не так. Попробуйте позже");
-                console.log(response.data);
+                if (response.data === "err2") {
+                  setErrorMes("У данного пользователя нет прав доступа администратора");
+                  setErrLogin("form__input_err");
+                  setErrPass("form__input_err");
+                } 
+                else {
+                  setErrorMes("Что-то пошло не так. Попробуйте позже");
+                  console.log(response.data);
+                }
               }
             }
           })
@@ -195,14 +202,13 @@ const Form = ({showActivePage, activePage}) => {
     case "author": {
       formContent = (
         <>
-          <label htmlFor="login" className="form__label">Имя пользователя</label>
+          <label htmlFor="login" className="form__label">Имя пользователя c правами администратора</label>
           <input value={login} className={`form__input ${errLogin}`} type="text" placeholder="Введите имя пользователя" name="login" required pattern="^[a-zA-Z0-9]+$" title="Только латинские буквы и цифры" onChange={handleChangeLogin}/>
           <label className="form__label" htmlFor="password">Пароль</label>
           <input value={password} className={`form__input ${errPass}`} type="password" placeholder="Введите пароль" name="password" required pattern="^[a-zA-Z0-9]+$" title="Только латинские буквы и цифры" onChange={handleChangePass}/>
           <div className="form__error">{errorMessage}</div>
           <Button addClass="form__button button_light" buttonSpan="Войти" type="submit" onClick={()=>{author(login,password,password2,email)}}/>
-          <span onClick={()=>{goToReg(showActivePage)}} className="form__label form__link">Зарегистрироваться</span>
-          <span onClick={()=>{goToAuthHelp(showActivePage)}}className="form__label">Забыли пароль?</span>
+          <span onClick={()=>{goToAuthHelp(showActivePage)}}className="form__label form__link">Забыли пароль?</span>
         </>
       );
       break;
@@ -232,7 +238,6 @@ const Form = ({showActivePage, activePage}) => {
           <div className="form__error">{errorMessage}</div>
           <Button addClass="form__button button_light" buttonSpan="Восстановить" type="submit" onClick={()=>{recoveryPass(recovery)}}/>
           <span onClick={()=>{goToAuth(showActivePage)}} className="form__label form__link">Вернуться к входу</span>
-          <span onClick={()=>{goToReg(showActivePage)}} className="form__label form__link">Зарегистрироваться</span>
         </>
       );
       break;

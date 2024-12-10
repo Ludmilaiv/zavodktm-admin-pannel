@@ -21,7 +21,7 @@ const Devices = ({showActivePage, devices=null}) => {
   const [errId, errIdSet] = useState("");
   const [errName, errNameSet] = useState("");
 
-  localStorage.removeItem(localStorage.getItem('user') + "defaultDevice");
+  localStorage.removeItem(localStorage.getItem('admin') + "defaultDevice");
 
   const loadingViev = <div className="content__page"><Oval
     height={100}
@@ -47,11 +47,12 @@ const Devices = ({showActivePage, devices=null}) => {
   }
 
   useEffect(() => {
+    getDevices();
     const getDevsInterval = setInterval(getDevices,3000)
     return function cleanup() {
       clearInterval(getDevsInterval);
     }
-  });
+  }, []);
  
   function handleChangeName(event) {
     errMessageSet("");
@@ -73,7 +74,7 @@ const Devices = ({showActivePage, devices=null}) => {
       if(!name) errNameSet("form__input_err");
       if(!id) errIdSet("form__input_err");
     } else {
-      let user = {user_id: localStorage.getItem('user'), token: localStorage.getItem('token')};
+      let user = {user_id: localStorage.getItem('admin'), token: localStorage.getItem('admintoken')};
       const dev = {dev_id: id, dev_name: name, ...user }
       axios.post(data.addDeviceURL, dev)
           .then(function (response) {
@@ -122,13 +123,16 @@ const Devices = ({showActivePage, devices=null}) => {
 
  return (
     <> 
+      <div className="devices__button-wrap">
+        <Button addClass="devices__button" buttonSpan="+ Добавить устройство" type="popup" onClick={()=>addPopupShow(true)}/>
+      </div>
+      
       <ul className="devices">
         { Array.isArray(devices) ? devices.map(dev => (
           <Device dev={dev} key={dev.id} stopGet={stopGet} startGet={startGet} showActivePage={showActivePage} addPopup={addPopup}/>
         )) : loadingViev }
       </ul> 
-      <Button addClass="devices__button" buttonSpan="Добавить устройство" type="popup" onClick={()=>addPopupShow(true)}/>
-      {(addPopup)?<Popup popupOK={()=>addDevice(id,name,localStorage.getItem("user"))} startProcess={()=>{startGet(); getDevices()}} stopProcess={stopGet} popupShow={addPopupShow} text={addHTML}/>:""}
+      {(addPopup)?<Popup popupOK={()=>addDevice(id,name,localStorage.getItem("admin"))} startProcess={()=>{startGet(); getDevices()}} stopProcess={stopGet} popupShow={addPopupShow} text={addHTML}/>:""}
       {(doneAddPopup)?<Popup info="true" time="3000" startProcess={()=>{startGet(); getDevices()}} stopProcess={stopGet} popupShow={doneAddPopupShow} text={`Устройство "${name}" успешно добавлено`}/>:""}
       {(errPopup)?<Popup info="true" time="3000" startProcess={()=>{startGet(); getDevices()}} stopProcess={stopGet} popupShow={errPopupShow} text="Что-то пошло не так. Проверьте интернет-подключение и попробуйте ещё раз"/>:""}
     </>

@@ -1,0 +1,30 @@
+.checkbox-container {
+  &__position {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }    
+  &__item {
+    display: flex;
+    align-items: center;
+  } 
+  .checkbox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    margin-right: 7px;
+    border: $border;
+    border-radius: $border-radius;
+    font-family: $main-font;
+    color: $font-color-main;
+    font-size: 17px;
+    &__label {
+      font-family: $main-font;
+      color: $font-color-main;
+      font-size: 17px ;
+    }
+  }
+}

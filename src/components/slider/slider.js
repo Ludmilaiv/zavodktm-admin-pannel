@@ -1,30 +1,23 @@
-
 import { Direction, Range } from 'react-range';
 import { connect } from 'react-redux';
 import Button from "../button";
-//import { setTemp } from '../../actions';
 import store from '../../store';
 import classNames from 'classnames';
 
 const Slider = ({classPrefix=null, value, outID, min, max}) => {
   function setData(val) {
     store.getState().functionSendSettings(outID, val);
-    //states[`block_${outID}`] = true;
-    //store.dispatch(setTemp(states));
   }
 
-  // function unblock() {
-  //   const states = {};
-  //   states[`block_${outID}`] = false;
-  //   setTimeout(()=>{store.dispatch(setTemp(states))}, 5000);
-  // }
+  if (value === null) {
+    return <></>
+  }
 
   return (
     <div className={classNames("slider", "slider_position", classPrefix && "slider_" + classPrefix)}>
-      <Button buttonSpan="-" addClass="slider__button" type="slide" style={{padding:'0 0.3vw 2vw 0'}} onClick={()=>{
+      <Button buttonSpan="−" addClass="slider__button" type="slide" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}} onClick={()=>{
         if (Number(value) > min) {
           setData(Number(value) - 1);
-          // store.getState().functionSendSettings(outID, Number(value) - 1, unblock);
         }
       }}/>
       <Range
@@ -34,10 +27,6 @@ const Slider = ({classPrefix=null, value, outID, min, max}) => {
         max={max}
         values={(value < min) ? [min] : ((value > max) ? [max] : [value])}
         onChange={(val) => setData(val)}
-        // onFinalChange={() => {
-        //   //store.getState().functionSendSettings(outID, Number(value), unblock);
-        //   store.getState().functionSendSettings(outID, Number(value));
-        // }}
         renderTrack={({ props, children }) => (
           <div
             {...props}
@@ -46,10 +35,10 @@ const Slider = ({classPrefix=null, value, outID, min, max}) => {
               width: classPrefix ? '7px' : '',
               height: classPrefix ? '70%' : '7px',
               flexGrow: '1',
-              marginLeft: !classPrefix ? '3vw' : '',
-              marginRight: !classPrefix ? '3vw' : '',
-              marginTop: classPrefix ? '3vw' : '',
-              marginBottom: classPrefix ? '3vw' : '',
+              marginLeft: !classPrefix ? '7px' : '',
+              marginRight: !classPrefix ? '7px' : '',
+              marginTop: classPrefix ? '7px' : '',
+              marginBottom: classPrefix ? '7px' : '',
               backgroundColor: '#fff'
             }}
           >
@@ -61,8 +50,8 @@ const Slider = ({classPrefix=null, value, outID, min, max}) => {
             {...props}
             style={{
               ...props.style,
-              height: classPrefix ? '4vw' : '6vw',
-              width: classPrefix ? '6vw' : '4vw',
+              height: classPrefix ? '15px' : '25px',
+              width: classPrefix ? '25px' : '15px',
               backgroundColor: '#000',
               border: '1px solid white',
               outline: 'none'
@@ -73,7 +62,6 @@ const Slider = ({classPrefix=null, value, outID, min, max}) => {
       <Button buttonSpan="+" addClass="slider__button" type="slide" onClick={()=>{
         if (Number(value) < max) {
           setData(Number(value) + 1);
-          //store.getState().functionSendSettings(outID, Number(value) + 1, unblock);
         }
       }}/>
     </div>

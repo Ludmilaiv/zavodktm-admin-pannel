@@ -3,15 +3,66 @@
     height: 90vh;
     height: calc(var(--vh, 1vh) * 90);
     width: 100%;
+    display: flex;
+  }
+  &__menu-block {
+    width: 250px;
+    border-right: $border;
+    @media (max-width: 900px) {
+      width: 200px;
+    }
+    @media (max-width: 750px) {
+      width: 0px;
+      border: none;
+    }
+  }
+  &__main-block {
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+  }
+  &__title {
+    font-size: 25px;
+    color: $font-color-main;
+    font-family: $main-font;
+    font-weight: bold;
+    text-align: center;
+    margin: 5px auto;
+    width: 70%;
+    @media (max-width: 750px) {
+      box-sizing: border-box;
+      padding-right: 90px;
+      text-align: left;
+      font-size: 20px;
+      width: 85%;
+      margin: auto;
+    }
+    @media (max-width: 500px) {
+      font-size: 18px;
+    }
   }
   &__page {
-    height: 81vh;
-    height: calc(var(--vh, 1vh) * 81);
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex: 1 1;
-    width: 100%;
+    width: 70%;
+    margin: 40px auto;
+    color: $font-color-main;
+    font-family: $main-font;
+    @media (max-width: 750px) {
+      width: 85%;
+    }
+  }
+  &__subtitle {
+    font-size: 18px;
+    padding: 5px 0;
+    border-bottom: $border;
+    border-width: 2px;
+    &_nofirst {
+      margin-top: 25px;
+    }
   }
   &__error {
     font-family: $main-font;

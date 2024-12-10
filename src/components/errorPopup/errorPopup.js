@@ -2,8 +2,6 @@ import { connect } from 'react-redux';
 import store from "../../store";
 import Popup from "../popup";
 import React, { useState } from 'react';
-//import { setTemp } from '../../actions';
-
 
 const ErrorPopup = ({
   name,
@@ -20,15 +18,7 @@ const ErrorPopup = ({
   tempSmoke,
   setsForSend,
 }) => {
-  //const [errorPause, setErrorPause] = useState(false);
   const [waringClosed, setWaringClosed] = useState(false);
-
-  // useEffect(() => {
-  //   if (errorPause) {
-  //     const errorTimeout = setTimeout(() => { setErrorPause(false) }, 5000);
-  //     return (clearTimeout(errorTimeout));
-  //   }
-  // }, [errorPause]);
 
   let warningBtn = "";
 
@@ -67,7 +57,7 @@ const ErrorPopup = ({
         ) 
         else warningBtn = <button className="warning-label__btn" 
         onClick={() => setWaringClosed(false)}>
-          <img src="images/warning.svg" alt="!"/>
+          <img src="images/warning.svg" alt="!"/> Неисправности!
           </button>;
       }
     }

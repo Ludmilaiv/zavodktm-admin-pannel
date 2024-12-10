@@ -2,16 +2,21 @@ const path = "https://zavodktm.ru";
 
 const data = {
   regURL: path + "/reg-v1",
-  authURL: path + "/reg-v1",
+  authURL: path + "/reg-v1-admin",
   recoveryPassURL: path + "/recovery-pass",
   devicesURL: path + "/get-devices-v1",
+  allDevicesUrl: path + "/get-all-devices",
   delDeviceURL: path + "/del-device-v1",
   editDeviceURL: path + "/edit-device-v1",
   addDeviceURL: path + "/add-device-v1",
+  addIDURL: path + "/add-device-id",
+  delIDURL: path + "/del-device-id",
   getDataURL: path + "/get-data-v1",
   setDataURL: path + "/set-data-v1",
   confirmURL: path + "/mail-confirm",
   getConfirmURL: path + "/get-confirm",
+  getStatURL: path + "/get-stat",
+  getDeviceInfoURL: path + "/get-device-info",
   metricDict: {
     tempFlow: <>&deg;C</>,
     tempReturn: <>&deg;C</>,

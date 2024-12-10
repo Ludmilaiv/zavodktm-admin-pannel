@@ -1,7 +1,7 @@
 import Menu from '../menu';
 
 const Footer = ({showActivePage, activePage}) => {
-  if (localStorage.getItem("user") && !(activePage==="devices" || activePage==="profile")) {
+  if (localStorage.getItem("admin") && !(activePage==="devices" || activePage==="profile")) {
 
     return (
       <div className="footer footer_position">

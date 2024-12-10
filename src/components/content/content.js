@@ -1,28 +1,28 @@
-import HomePage from "../homePage";
-import KotelPage from "../kotelPage";
+import DeviceDetailPage from "../deviceDetailPage";
+import DeviceInfoPage from "../deviceInfoPage";
 import AuthorPage from "../authorPage";
 import DevicesPage from "../devicesPage";
-import BolerPage from "../bolerPage";
-import TermosPage from "../termosPage";
-import SettingsPage from "../settingsPage";
 import Loading from "../loading";
 import ConfirmPage from "../confirmPage";
 import ErrorPopup from "../errorPopup";
+import BurgerMenu from "../burgerMenu";
+import AllDevicesPage from "../allDevicesPage";
 
-const Content = ({showActivePage, activePage, getDevices}) => {
+const Content = ({showActivePage, outPageTitle, activePage, pageTitle}) => {
   return (
     <div className="content content_position">
+      {(activePage!=="author" && activePage!=="reg" && activePage!=="authorHelp") && <div className="content__menu-block">
+        <BurgerMenu showActivePage={showActivePage} activePage={activePage}/>
+      </div>}
+      <div className="content__main-block">
+        <h2 className="content__title">{pageTitle}</h2>
         {activePage==="author"||activePage==="reg"||activePage==="authorHelp"?(<AuthorPage showActivePage={showActivePage} activePage={activePage}/>):
-            (activePage==="home"?(<><HomePage/><ErrorPopup showActivePage={showActivePage}/></>):(
-                activePage==="devices"?(<DevicesPage getDevices={getDevices} showActivePage={showActivePage}/>): (
-                  activePage === "kotel" ? (<><KotelPage/><ErrorPopup showActivePage={showActivePage}/></>): (
-                    activePage === 'boler' ? (<><BolerPage/><ErrorPopup showActivePage={showActivePage}/></>) : (
-                      activePage === 'termos' ? (<><TermosPage/><ErrorPopup showActivePage={showActivePage}/></>) : (
-                        activePage === 'settings' ? (<><SettingsPage/><ErrorPopup showActivePage={showActivePage}/></>) : (
-                          activePage === 'loading' ? (<Loading/>) : (
-                            activePage === 'confirm' ? (<ConfirmPage/>) : ''
-                        )
-                      )
+            (activePage==="deviceDetail"?(<><DeviceDetailPage outPageTitle={outPageTitle} /><ErrorPopup showActivePage={showActivePage}/></>):(
+              activePage==="deviceInfo"?(<><DeviceInfoPage pageTitle={pageTitle} /><ErrorPopup showActivePage={showActivePage}/></>) : (
+                activePage==="devices"?(<DevicesPage showActivePage={showActivePage}/>): (
+                  activePage==="alldevices"?(<AllDevicesPage showActivePage={showActivePage}/>) : (
+                    activePage === 'loading' ? (<Loading/>) : (
+                      activePage === 'confirm' ? (<ConfirmPage/>) : ''
                     )
                   )
                 )
@@ -30,6 +30,8 @@ const Content = ({showActivePage, activePage, getDevices}) => {
             )
           )
         }
+      </div>
+
        
         
     </div>

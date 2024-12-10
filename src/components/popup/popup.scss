@@ -9,12 +9,12 @@
     background: rgba($popup-background, 0.5);
   }
   &__box {
-    width: 90vw;
-    height: 60vh;
-    height: calc(var(--vh, 1vh) * 60);
-    margin: 15vh auto;
-    margin: calc(var(--vh, 1vh) * 15) auto;
-    padding: 6vw;
+    max-width: 460px;
+    height: 70vh;
+    height: calc(var(--vh, 1vh) * 70);
+    margin: 10vh auto;
+    margin: calc(var(--vh, 1vh) * 10) auto;
+    padding: 70px;
     list-style: none;
     text-align: center;
     background-color: $widget-color;
@@ -29,15 +29,23 @@
     position: relative;
     color: $font-color-main;
     font-family: $main-font;
-    font-size: 5vw;
+    font-size: 18px;
+    @media (max-width: 500px) {
+      padding-left: 50px;    
+      padding-right: 50px;  
+    }
   }
   &__button {
     padding: 1vh;
     padding: calc(var(--vh, 1vh) * 1);
     margin-top: 2vh;
     margin-top: calc(var(--vh, 1vh) * 2);
-    font-size: 2.5vh;
-    font-size: calc(var(--vh, 1vh) * 2.5);
+    font-size: 17px;
+    cursor: pointer;
+    &:hover {
+      color: bisque;
+      border-color: bisque;
+    }
   }
   &__exit {
     position: absolute;
@@ -45,6 +53,11 @@
     top: 32px;
     width: 32px;
     height: 32px;
+    cursor: pointer;
+    &:hover {
+      &::before {background-color: bisque;}
+      &::after {background-color: bisque;}
+    }
     &::before {
       position: absolute;
       left: 15px;

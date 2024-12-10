@@ -22,7 +22,17 @@ const Popup = ({text, time=0, popupShow, startProcess, stopProcess, popupOK, inf
   });
   
     return (
-      <div className="popup popup_position">
+      <div className="popup popup_position" onClick={
+        (e)=>{ 
+          if (e.target.className === "popup popup_position") {
+            popupShow(false); 
+            if (!error) {
+              startProcess()
+            }
+          }
+          
+        }
+      }>
         <div className="popup__box">
           <div className="popup__text">
             {text}

@@ -20,7 +20,7 @@ const Confirm = () => {
     setRepeatTimer(10);
     setErrorMes("");
     setErrorMes("Подождите...");
-    const userId = localStorage.getItem('user');
+    const userId = localStorage.getItem('admin');
     if (!userId) return;
     axios.post(data.confirmURL, {user_id: userId})
         .then(function (response) {

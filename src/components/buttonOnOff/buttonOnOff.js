@@ -34,10 +34,9 @@ const ButtonOnOff = ({setID, setVal=0, status=-1, changed, loading=false}) => {
     if (+setVal === 0) {
       set = 1;
     }
-    const settings = {};
-    settings[setID] = set;
-    store.dispatch(setTemp(settings));
-    store.getState().functionSendSettings(setID, set, stopLoadingAfterDelay);
+
+    store.getState().functionSendSettings(setID, set);
+    stopLoadingAfterDelay();
   }
 
   let buttonImg = '';

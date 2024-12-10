@@ -1,9 +1,9 @@
-import Widget from "../widget"
+import Form from '../form';
 
 const AuthorPage = ({showActivePage, activePage}) => {
   return (
-    <div className="content__page">
-      <Widget typeClass="author" activePage={activePage} showActivePage={showActivePage}/>
+    <div className="author__page">
+      <Form formType="author" activePage={activePage} showActivePage={showActivePage} />
     </div>
   )
 }

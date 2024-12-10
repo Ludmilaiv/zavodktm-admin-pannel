@@ -8,6 +8,7 @@ import Settings from '../settings';
 import Termos from '../termos';
 import store from "../../store";
 import Confirm from '../confirm';
+import AllDevices from "../allDevices";
 
 const Widget = ({
   typeClass, tempID="tempFlow", setID="setsTempCO", icon, 
@@ -46,6 +47,16 @@ const Widget = ({
       </div>
     )
   }
+
+    // Для виджета на страничке со всеми устройствами
+
+    if (typeClass === "alldevices") {
+      return (
+        <div className={className}>
+          <AllDevices showActivePage={showActivePage}/>
+        </div>
+      )
+    }
   
   // Для виджета на странице настроек котла (kotel)
   if (typeClass === "kotel") {

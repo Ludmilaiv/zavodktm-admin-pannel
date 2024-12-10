@@ -1,0 +1,21 @@
+.curves {
+    background-color: white;
+    margin-top: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    &__label {
+        color: black;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        line-height: 1;
+    }
+    &__checkbox {
+        margin-right: 10px;
+        width: 17px;
+        height: 17px;
+    }
+    &__controls {
+        margin: 5px 50px 20px;
+    }
+}

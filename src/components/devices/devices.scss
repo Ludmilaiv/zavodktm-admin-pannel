@@ -1,22 +1,25 @@
 .devices {
   &__item {
-    position: relative;
-    min-height: 18vw;
     &_offline {
       border-color: $font-color-sup;
       color: $font-color-sup;
+      .devices {
+        &__info-name:hover {
+          color: rgba(255, 228, 196, 0.678) !important;
+        }
+      }
     }
-    width: 85vw;
-    margin: 2vh auto;
-    margin: calc(var(--vh, 1vh) * 2) auto;
-    border: $border;
-    border-radius: $border-radius;
+    width: 100%;
+    margin: 7px auto 0;
+    border-bottom: $border;
     font-family: $main-font;
     color: $font-color-main;
-    padding: 2vw;
-    font-size: 5vw;
+    padding: 5px 0 2px;
+    font-size: 18px;
+    @media (max-width: 750px) {
+      font-size: 16px;
+    }
     &_warning {
-      position: absolute;
       width: 1.5rem;
       height: 1.5rem;
       right: 2rem;
@@ -29,44 +32,54 @@
     }
   }
   &__button {
-    margin: 3vh auto;
-    margin: calc(var(--vh, 1vh) * 3) auto;
-    padding: 2vw;
+    padding: 7px;
+    width: fit-content;
     background: $font-color-sup;
-    position: absolute;
-    bottom: 0;
-    left: 3vw;
-    right: 3vw;
     font-family: $main-font;
     color: $font-color-main;
-    font-size: 5vw;
+    font-size: 17px;
+    &:hover {
+      color: bisque;
+    }
+    &-wrap {
+      margin: 20px auto 10px;
+    }
   }
   &__info {
-    padding: 10px;
-    position: absolute;
+    padding: 5px 0 3px;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     display: flex;
-    justify-content: space-between;
-    align-items: stretch;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
     &.edit {
       opacity: 0;
     }
     &-temp {
       width: 7.5em;
       display: flex;
-      flex-direction: column;
+      flex-direction: row-reverse;
       justify-content: space-between;
       align-items: flex-end;
+      text-align: right;
+      @media (max-width: 750px) {
+        flex-direction: column;
+        gap: 10px;
+      }
     }
     &-name {
-      max-width: 80%;
+      width: 80%;
+      cursor: pointer;
+      &:hover {
+        color: bisque;
+      }
+      word-break: break-all;
     }
   }
   &__control {
-    position: absolute;
     left: 0;
     right: 0;
     top: 0;
@@ -74,8 +87,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    &.normal {
-      display: none;
+    @media (max-width: 750px) {
+      flex-direction: column;
     }
   }
   &__del {
@@ -83,9 +96,9 @@
       border-color: $font-color-sup;
       background-image: url("./images/del_offline.svg");
     }
-    width: 10vw;
-    height: 10vw;
-    margin: 1.5vw;
+    width: 30px;
+    height: 30px;
+    margin: 2px;
     background-image: url("./images/del.svg");
     background-position: center;
     background-size: 70%;
@@ -96,9 +109,9 @@
       border-color: $font-color-sup;
       background-image: url("./images/edit_offline.svg");
     }
-    width: 10vw;
-    height: 10vw;
-    margin: 1.5vw;
+    width: 30px;
+    height: 30px;
+    margin: 2px;
     background-image: url("./images/edit.svg");
     background-position: center;
     background-size: 70%;
@@ -108,7 +121,6 @@
     &_offline {
       background-image: url("./images/close_offline.svg");
     }
-    position: absolute;
     right: 0;
     top: 0;
     border: none;
@@ -135,9 +147,5 @@
   }
 
   list-style-type: none;
-  position: relative;
-  height: 70vh;
-  height: calc(var(--vh, 1vh) * 70);
-  overflow-y: scroll;
 }
    

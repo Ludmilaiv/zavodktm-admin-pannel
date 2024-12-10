@@ -18,6 +18,24 @@ function AnyOut({out=null, out2=null, outID, outID2, def='--', units, coef=-1, r
     )
   }
 
+  if (outID === 'setsOnGV' || outID === 'setsOnKomn') {
+    return (
+      <>{(out > 0) ? 'Вкл' : 'Выкл' }</>
+    )
+  }
+
+  if (outID === "lastOnlineTime") {
+    if (+out <= 0) {
+      return (<>никогда</>)
+    }
+    const datetime = new Date(out * 1000);
+    const h = datetime.getHours();
+    const m = datetime.getMinutes();
+    return (
+      <>{`${datetime.getDate()}.${datetime.getMonth() + 1}.${datetime.getFullYear()} ${h}:${String(m).length < 2 ? '0' : ''}${m}`}</>
+    )
+  }
+
   coef = (coef === -1) ? data.coefDict[outID] || 1: coef;
 
   const fl = x => ( (x && x.toString().includes('.')) ? (x.toString().split('.').pop().length) : 0 );
@@ -49,10 +67,6 @@ function AnyOut({out=null, out2=null, outID, outID2, def='--', units, coef=-1, r
   }
 
   const style = {};
-  if (!notDecrease && (+out >= 100 || +out2 >= 100)) {
-    style['fontSize'] = '0.7em';
-  };
-
   if (outID2) {
     style['display'] = 'flex';
   }

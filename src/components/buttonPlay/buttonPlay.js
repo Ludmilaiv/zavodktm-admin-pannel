@@ -25,7 +25,7 @@ const ButtonPlay = ({addClass='button_play', setID, loading, changed, setVal, st
   }, [changed]);
 
   const stopLoadingAfterDelay = () => {
-    loadTimeout = setTimeout(() => setLoading(false), 30000);
+    loadTimeout = setTimeout(() => setLoading(false), 50000);
   }
 
   const startStop = () => {
@@ -37,10 +37,9 @@ const ButtonPlay = ({addClass='button_play', setID, loading, changed, setVal, st
     if (+setVal === 0 || +status === 0) {
       set = 1;
     }
-    const settings = {};
-    settings[setID] = set;
-    store.dispatch(setTemp(settings));
-    store.getState().functionSendSettings(setID, set, stopLoadingAfterDelay);
+
+    store.getState().functionSendSettings(setID, set);
+    stopLoadingAfterDelay();
   }
   
   let buttonImg = '';
@@ -49,6 +48,7 @@ const ButtonPlay = ({addClass='button_play', setID, loading, changed, setVal, st
     buttonImg = "images/spiner.gif";
   } else if (+status === -1) {
       buttonImg = "images/offline.png";
+      style.backgroundColor = "rgb(105, 105, 105)";
     } else if (+setVal === 0 || +status === 0) {
       buttonImg = "images/play.png";
     } else {

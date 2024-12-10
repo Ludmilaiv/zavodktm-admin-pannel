@@ -1,0 +1,28 @@
+.device-detail {
+    &__item {
+        padding: 15px 0 5px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        gap: 10px;
+        border-bottom: $border;
+        border-color: rgba(255, 255, 255, 0.37);
+        &-label {
+            color: rgb(252, 184, 163);
+            display: block;
+            width: 40%;
+            @media (max-width: 1250px) {
+                width: 60%;
+            }
+            @media (max-width: 600px) {
+                width: 70%;
+            }
+            @media (max-width: 450px) {
+                width: 100%;
+            }
+        }
+        &-value {
+            width: 100px;
+        }
+    }
+}

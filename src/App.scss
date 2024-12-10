@@ -9,32 +9,29 @@
 @import './components/menu/menu';
 @import './components/footer/footer';
 @import './components/button/button';
-@import './components/devices/devices.scss';
+@import './components/devices/devices';
 @import './components/popup/popup';
 @import './components/slider/slider';
+@import './components/input/input';
 @import './components/checkboxContainer/checkboxContainer';
 @import './components/errorPopup/errorPopup';
+@import './components/deviceDetailPage/deviceDetailPage';
+@import './components/authorPage/authorPage';
+@import './components/pagination/pagination';
+@import './components/curves/curves';
   
 .wraper {
   &_background {
-    position: absolute;
-    height: 90.5vh;
-    height: calc(var(--vh, 1vh) * 90.5);
-    left: 0;
-    right: 0;
-    top: 0;
-    background: rgb(67,4,21);
-    background: linear-gradient(180deg, $bg-color-1 0%, $bg-color-2 61%, $bg-color-3 100%);
-    padding: 1vh 4vw 0.5vh 4vw;
-    padding: calc(var(--vh, 1vh) * 1) 4vw calc(var(--vh, 1vh) * 0.5) 4vw;
-  }
-  &_flex {
-    display: flex;
-    flex-direction: column;
+    background: #1e1e1e;
+
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+    overflow-y: auto;
   }
   &__error {
     width: 100%;
-    height: 100vh;
+    height: 95.5vh;
+    height: calc(var(--vh, 1vh) * 95.5);
     display: flex;
     justify-content: center;
     align-items: center;
