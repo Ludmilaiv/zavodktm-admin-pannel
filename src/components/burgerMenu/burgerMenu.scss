@@ -24,7 +24,7 @@
       display: block;
       position: static;
       border: none;
-      padding: 40px 10px;
+      padding: 0 10px;
     }
   }
   &__button {
@@ -69,6 +69,9 @@
     cursor: pointer;
     label {
       cursor: pointer;
+    }
+    &_first {
+      margin-top: 40px !important;
     }
     text-decoration: none;
     &_active {

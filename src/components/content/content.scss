@@ -16,6 +16,12 @@
       border: none;
     }
   }
+  &__user-info {
+    font-size: 14px;
+    color: $font-color-main;
+    font-family: $main-font;
+    opacity: 0.5;
+  }
   &__main-block {
     flex-grow: 1;
     overflow-y: auto;

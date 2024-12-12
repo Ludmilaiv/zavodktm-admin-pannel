@@ -15,6 +15,7 @@ const data = {
   setDataURL: path + "/set-data-v1",
   confirmURL: path + "/mail-confirm",
   getConfirmURL: path + "/get-confirm",
+  getUserInfoURL: path + "/get-user-info",
   getStatURL: path + "/get-stat",
   getDeviceInfoURL: path + "/get-device-info",
   metricDict: {

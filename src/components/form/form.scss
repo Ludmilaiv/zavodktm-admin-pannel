@@ -42,4 +42,12 @@
 		margin-bottom: 10px;
 		text-align: center;
 	}
+	&__container {
+		width: 60%;
+		margin: auto;
+		min-width: 300px;
+	}
+	&__captcha {
+		max-width: 300px;
+	}
 }

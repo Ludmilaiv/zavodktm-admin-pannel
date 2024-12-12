@@ -223,7 +223,15 @@ function getAllDevices(page=1) {
     } else {
       if (response.data === 'err5') {
         store.dispatch(setDevs({authError: true}));
-      } else {
+      } else if (response.data === 'err6') {
+        store.dispatch(setDevs({offline: false}));
+        store.dispatch(setDevs(
+          {
+            errCount: 0,
+            allDevices: [{id: "12345"}],
+          })
+        );
+      } else{
         store.dispatch(setDevs({errCount: store.getState().errCount + 1}));
         if (store.getState().errCount > 3) {
           store.dispatch(setDevs({offline: true}));

@@ -1,17 +1,15 @@
 import { useState, useEffect } from "react";
 import { connect } from 'react-redux';
 import Button from '../button'
-import DeviceForAdmin from "../deviceForAdmin";
 import Popup from "../popup"
 import axios from "axios";
 import data from "../../data";
 import store from "../../store";
 import { setDevs } from "../../actions";
 import { Oval } from  'react-loader-spinner';
-import Pagination from "../pagination";
 
 
-const AllDevices = ({showActivePage, allDevices=null}) => {
+const AddDevices = ({showActivePage, allDevices=null}) => {
 
   const [addPopup, addPopupShow] = useState(false);
   const [errPopup, errPopupShow] = useState(false);
@@ -20,24 +18,10 @@ const AllDevices = ({showActivePage, allDevices=null}) => {
   const [type, typeSet] = useState(2);
   const [errMessage, errMessageSet] = useState("");
   const [errId, errIdSet] = useState("");
-  const [countPages, setCountPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(localStorage.getItem(localStorage.getItem('admin') + "currentPage") || 1);
-  const [minHeight, setMinHeight] = useState(0);
   const [captchaImg, setCaptchaImg] = useState();
   const [captchaText, setCaptchaText] = useState("");
 
   localStorage.removeItem(localStorage.getItem('admin') + "defaultDevice");
-
-  useEffect(() => {
-    if (!currentPage) return;
-    const user = localStorage.getItem('admin');
-    if (localStorage.getItem(user + "currentPage") !== currentPage) {
-      store.dispatch(setDevs({allDevices: null}));
-      setMinHeight(currentPage !== countPages ? 55 * 20 : countPages % 20);
-      localStorage.setItem(user + "currentPage", currentPage);
-      getAllDevices(currentPage);
-    } 
-  }, [currentPage]);
 
   useEffect(() => {
     const regex = /^[a-z0-9]+$/i;
@@ -73,22 +57,6 @@ const AllDevices = ({showActivePage, allDevices=null}) => {
   function startGet() {
     store.dispatch(setDevs({pauseGet: false}));
   }
-
-  useEffect(() => {
-    getAllDevices(currentPage);
-    const user = localStorage.getItem('admin');
-    const getDevsInterval = setInterval(()=>getAllDevices(localStorage.getItem(user + "currentPage") || 1),5000)
-    return function cleanup() {
-      clearInterval(getDevsInterval);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (allDevices) {
-      setCountPages(allDevices['count']);
-      setMinHeight(0);
-    }
-  }, [allDevices])
 
   function handleChangeId(event) {
     errMessageSet("");
@@ -140,7 +108,6 @@ const AllDevices = ({showActivePage, allDevices=null}) => {
                       })
                 } else {
                   console.log(response.data);
-                  getAllDevices(currentPage);
                   addPopupShow(false);
                   errPopupShow(true);
                 }
@@ -149,7 +116,6 @@ const AllDevices = ({showActivePage, allDevices=null}) => {
           })
           .catch(function (error) {
             console.log(error);
-            getAllDevices(currentPage);
             addPopupShow(false);
             errPopupShow(true);
           });
@@ -157,7 +123,7 @@ const AllDevices = ({showActivePage, allDevices=null}) => {
   }
 
   const addHTML = 
-  <div className="form popup__form form_flex">
+  <div className={'form__container'}><div className="form form_flex">
     <label className="form__label" htmlFor="devID">Идентификатор устройства</label>
     <input value={id} placeholder='ID устройства' onChange={handleChangeId} className={`form__input ${errId}`} type="text" name="devID"/>
     <label className="form__label" htmlFor="devТуре">Тип устройства</label>
@@ -173,21 +139,13 @@ const AllDevices = ({showActivePage, allDevices=null}) => {
       <img class="form__captcha" src={captchaImg} alt="captcha"/>
     </>}
     <div className="form__label form__error">{errMessage}</div>
-  </div>
+    <Button addClass="form__button button_light" buttonSpan="Добавить" type="submit" onClick={()=>addDevice(id,type,localStorage.getItem("admin"))}/>
+  </div></div>
 
  return (
     <> 
-      <div className="devices__button-wrap">
-        <Button addClass="devices__button" buttonSpan="+ Добавить ID устройства" type="popup" onClick={()=>addPopupShow(true)}/>
-      </div>
-      {countPages > 1 && <Pagination count={countPages} setPage={setCurrentPage} page={currentPage}/>}
-      <ul className="devices" style={{minHeight: `${minHeight}px`}}>
-        { allDevices && Array.isArray(allDevices['devs']) ? allDevices['devs'].map(dev => (
-          <DeviceForAdmin dev={dev} key={dev.id} stopGet={stopGet} startGet={startGet} showActivePage={showActivePage} addPopup={addPopup}/>
-        )) : loadingViev }
-      </ul> 
-      {countPages > 1 && <Pagination count={countPages} setPage={setCurrentPage} page={currentPage}/>}
       {(addPopup)?<Popup popupOK={()=>addDevice(id,type,localStorage.getItem("admin"))} startProcess={()=>{startGet(); getAllDevices()}} stopProcess={stopGet} popupShow={addPopupShow} text={addHTML}/>:""}
+      {addHTML}
       {(doneAddPopup)?<Popup info="true" time="3000" startProcess={()=>{startGet(); getAllDevices()}} stopProcess={stopGet} popupShow={doneAddPopupShow} text={`Устройство "${id}" успешно добавлено`}/>:""}
       {(errPopup)?<Popup info="true" time="3000" startProcess={()=>{startGet(); getAllDevices()}} stopProcess={stopGet} popupShow={errPopupShow} text="Что-то пошло не так. Проверьте интернет-подключение и попробуйте ещё раз"/>:""}
     </>
@@ -203,4 +161,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(AllDevices)
+export default connect(mapStateToProps)(AddDevices)

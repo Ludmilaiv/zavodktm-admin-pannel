@@ -119,7 +119,7 @@ const Form = ({showActivePage, activePage}) => {
                 setErrPass("form__input_err");
               } else {
                 if (response.data === "err2") {
-                  setErrorMes("У данного пользователя нет прав доступа администратора");
+                  setErrorMes("У данного пользователя нет прав доступа к панели администратора");
                   setErrLogin("form__input_err");
                   setErrPass("form__input_err");
                 } 

@@ -13,7 +13,10 @@ const DeviceForAdmin = ({dev, stopGet, startGet, showActivePage}) => {
   const [password, setPassword] = useState("");
   const [errMessage, setErrMessage] = useState();
 
-  const getAllDevices = store.getState().funcGetAllDevices;
+  const getAllDevices = () => {
+    const user = localStorage.getItem('admin');
+    store.getState().funcGetAllDevices(localStorage.getItem(user + "currentPage") || 1);
+  };
 
   const lookDeviceInfo = (myId, id) => {
     showActivePage("deviceInfo", 'ID: ' + myId);

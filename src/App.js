@@ -1,11 +1,8 @@
 import './App.scss';
 import Header from './components/header';
 import Content from './components/content';
-import Footer from './components/footer';
 import React, { useState, useEffect } from 'react';
 import store from "./store";
-import { setDevs } from './actions';
-import Popup from "./components/popup";
 import { connect } from "react-redux";
 import data from "./data";
 import axios from "axios";
@@ -17,6 +14,8 @@ window.addEventListener('storage', function (evt) {
 function App({offline=false, authError=false}) {
 
   const [isConfirm, setIsConfirm] = useState(false);
+  const [role, setRole] = useState();
+  const [userName, setUserName] = useState();
   const [isConfirmLoading, setIsConfirmLoading] = useState(true);
 
   useEffect(() => {
@@ -44,8 +43,13 @@ function App({offline=false, authError=false}) {
         status = "deviceDetail";
         title = "Подождите..."
       } else {
-        status = "devices";
-        title = "Устройства"
+        if (+role === 1) {
+          status = "devices";
+          title = "Мои устройства"
+        } else if (+role === 2) {
+          status = "adddevices";
+          title = "Добавление ID устройства"
+        }
       }
     } else {
       if (isConfirmLoading) {
@@ -56,10 +60,17 @@ function App({offline=false, authError=false}) {
         title = "Подтверждение эл. почты";
       }
     } 
-  }
+  } 
 
   const [activePage, setActivePage] = useState(status);
   const [pageTitle, setPageTitle] = useState(title);
+
+  useEffect(() => {
+    if (status === "author") {
+      setRole(null);
+      setUserName(null);
+    }
+  }, [status])
 
   useEffect(() => {
     let timeout;
@@ -83,6 +94,16 @@ function App({offline=false, authError=false}) {
       return () => clearTimeout(timeout);
     }
   });
+
+  useEffect(() => {
+    axios.post(data.getUserInfoURL, {user_id: localStorage.getItem("admin"), token: localStorage.getItem('admintoken')})
+      .then(function (response) {
+        if (typeof response.data === "object") {
+          setUserName(response.data['login']);
+          setRole(response.data['role']);
+        } 
+      })
+  })
 
   useEffect(() => {
     if (!isConfirm) {
@@ -110,12 +131,17 @@ function App({offline=false, authError=false}) {
           setActivePage("deviceDetail");
           setPageTitle("Подождите...");
         } else {
-          setActivePage("devices");
-          setPageTitle("Мои устройства");
+          if (+role === 1) {
+            setActivePage("devices");
+            setPageTitle("Мои устройства");
+          } else if (+role === 2) {
+            setActivePage("adddevices");
+            setPageTitle("Добавление ID устройства");
+          }
         }
       }
     }
-  }, [isConfirm, isConfirmLoading, activePage]);
+  }, [isConfirm, isConfirmLoading, activePage, role]);
 
   const showActivePage = (page, title) => {
     if (page === "devices") {
@@ -132,7 +158,7 @@ function App({offline=false, authError=false}) {
   return (
     <div className="App wraper wraper_background">
         <Header showActivePage={showActivePage} activePage={activePage} title="Панель администратора"/>
-        <Content showActivePage={showActivePage} outPageTitle={outPageTitle} activePage={activePage} pageTitle={pageTitle}/>
+        <Content userName={userName} role={role} showActivePage={showActivePage} outPageTitle={outPageTitle} activePage={activePage} pageTitle={pageTitle}/>
         {/* <Footer showActivePage={showActivePage} activePage={activePage}/>
         {(store.getState().offline)?(<Popup text="Не возможно получить данные. Проверьте интернет-подключение" info="true" error="true" popupShow={()=>{store.dispatch(setDevs({errCount: 0})); store.dispatch(setDevs({offline: false}))}}/>):""}  */}
     </div>
